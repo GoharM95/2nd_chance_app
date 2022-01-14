@@ -59,9 +59,9 @@ const quizQuestions = {
 
 // startQuiz()
 // getRandomQuestions(all questions array) => random quiz
-// renderCurrentQuestion(func) with currentQuestionIndex(param) => form or qBox to append to form
+// renderCurrentQuestionToForm(func) with currentQuestionIndex(param) => form or qBox to append to form
 // after getting user's values update answers state in random quiz
-// static next button => loadNextQuestion() => currentQuestionIndex++, call again renderCurrentQuestion()
+// static next button => loadNextQuestion() => currentQuestionIndex++, call again renderCurrentQuestionToForm()
 // renderResults() when quiz will be finished
 
 const randomQuiz = [];
@@ -101,8 +101,11 @@ console.log(getRandomQuestions(quizQuestions.math));
 const nextBtn = document.querySelector("#next-btn");
 
 let formElem = document.querySelector("form");
+formElem.addEventListener("submit", (event) => {
+  event.preventDefault();
+});
 
-function renderCurrentQuestion(quiz, currentIndex) {
+function renderCurrentQuestionToForm(quiz, currentIndex, formElem) {
   console.log("formElem", formElem);
   formElem.innerHTML = "";
   const questionBox = document.createElement("div");
@@ -110,7 +113,7 @@ function renderCurrentQuestion(quiz, currentIndex) {
   questionBox.id = "question-box";
   const questionCountdown = document.createElement("span");
   // console.log("quiz.length", quiz.length);
-  questionCountdown.innerHTML = `Question ${currentQuestionIndex + 1} of ${
+  questionCountdown.innerHTML = `Question ${currentIndex + 1} of ${
     quiz.length
   }`;
   questionBox.append(questionCountdown);
@@ -124,7 +127,7 @@ function renderCurrentQuestion(quiz, currentIndex) {
   questionBox.append(questionElem);
 
   // answers/ write new function
-  const answersArray = quiz[currentQuestionIndex]["answersArray"];
+  const answersArray = quiz[currentIndex]["answersArray"];
   console.log("answersArray", answersArray);
   const answersList = document.createElement("ul");
   answersList.classList.add("answers");
@@ -156,12 +159,12 @@ function renderCurrentQuestion(quiz, currentIndex) {
   return formElem;
 }
 
-// console.log(renderCurrentQuestion(randomQuiz, 1));
+// console.log(renderCurrentQuestionToForm(randomQuiz, 1));
 // const randomQuizA = getRandomQuestions(quizQuestions.math);
 
 // console.log(
-//   "renderCurrentQuestion(getRandomQuestions(quizQuestions.math))",
-//   renderCurrentQuestion(randomQuiz, currentQuestionIndex)
+//   "renderCurrentQuestionToForm(getRandomQuestions(quizQuestions.math))",
+//   renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex)
 // );
 
 const startBtn = document.querySelector("#start-btn");
@@ -175,12 +178,13 @@ function startQuiz() {
   // console.log("currentQuestionIndex", currentQuestionIndex);
   // console.log("randomQuiz.length", randomQuiz.length);
 
-  renderCurrentQuestion(randomQuiz, currentQuestionIndex);
+  renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex, formElem);
 }
 
 console.log(formElem);
 
 function loadNextQuestion() {
+  // event.preventDefault();
   // console.log("currentQuestionIndex", currentQuestionIndex);
   // console.log(formElem);
 
@@ -193,7 +197,7 @@ function loadNextQuestion() {
   if (currentQuestionIndex < randomQuiz.length) {
     // questionBox.remove();
     // console.log("currentQuestionIndex", currentQuestionIndex);
-    renderCurrentQuestion(randomQuiz, currentQuestionIndex);
+    renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex, formElem);
   } else {
     // renderResults()
     console.log("result!!!");
