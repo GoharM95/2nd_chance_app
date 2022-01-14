@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  display: table;
+  margin: auto;
+}
+
+body {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.candidate_info {
+  width: 600px;
+  height: 600px;
+  padding: 15px;
+  background-color: #588061;
+  border-radius: 50%;
+  border-bottom: 4px solid #000;
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
