@@ -28,7 +28,7 @@ const quizQuestions = {
         { answer: 5, correct: false },
       ],
       level: 0,
-      chosenAnswer: null,
+      choosedAnswer: "",
     },
     {
       question:
@@ -40,7 +40,7 @@ const quizQuestions = {
         { answer: 5, correct: true },
       ],
       level: 1,
-      chosenAnswer: null,
+      choosedAnswer: "",
     },
     {
       question:
@@ -52,10 +52,17 @@ const quizQuestions = {
         { answer: 6, correct: true },
       ],
       level: 2,
-      chosenAnswer: null,
+      choosedAnswer: "",
     },
   ],
 };
+
+// startQuiz()
+// getRandomQuestions(all questions array) => random quiz
+// renderCurrentQuestionToForm(func) with currentQuestionIndex(param) => form or qBox to append to form
+// after getting user's values update answers state in random quiz
+// static next button => loadNextQuestion() => currentQuestionIndex++, call again renderCurrentQuestionToForm()
+// renderResults() when quiz will be finished
 
 const randomQuiz = [];
 
@@ -70,91 +77,42 @@ function getRandomQuestions(quizQuestionsArr) {
 
   let quantity = 0;
   while (quantity < quizQuestionsQuantity) {
+    // for (let i = 0; i < quizQuestionsArr.length; i++) {
     const randomQuestionIndex = Math.floor(
       Math.random() * quizQuestionsArr.length
     );
     randomQuiz.push(quizQuestionsArr[randomQuestionIndex]);
     quizQuestionsArr.splice(randomQuestionIndex, 1);
+    // console.log("randomQuiz", randomQuiz);
     quantity++;
+
+    // }
   }
   randomQuiz.sort((a, b) => a.level - b.level);
+  // console.log("randomQuiz", randomQuiz);
 
   return randomQuiz;
 }
+
+// console.log("randomQuiz", randomQuiz);
+
+console.log(getRandomQuestions(quizQuestions.math));
+
+const nextBtn = document.querySelector("#next-btn");
 
 let formElem = document.querySelector("form");
 formElem.addEventListener("submit", (event) => {
   event.preventDefault();
 });
 
-function renderAnswerOptions(quiz, currentIndex, isResult) {
-  // console.log("currentIndex", currentIndex);
-  // console.log("randomQuiz", randomQuiz);
-
-  const answersArray = quiz[currentIndex]["answersArray"];
-  const answersList = document.createElement("ul");
-  answersList.classList.add("answers");
-
-  for (let answerObject of answersArray) {
-    const answerValue = answerObject.answer;
-    const answerLine = document.createElement("li");
-    answerLine.classList.add("answer");
-    answerLine.id = "answer";
-    const radioButton = document.createElement("input");
-    radioButton.setAttribute("type", "radio");
-    radioButton.name = "answer";
-    radioButton.id = "answer";
-    radioButton.value = answerValue;
-
-    const label = document.createElement("label");
-    label.append(radioButton);
-    answerLine.append(label);
-    answerLine.append(answerValue);
-
-    const currentQuestion = quiz[currentIndex];
-    if (isResult) {
-      // can I move this?
-      if (answerValue === currentQuestion.chosenAnswer) {
-        radioButton.checked = true;
-      } else {
-        radioButton.disabled = true;
-      }
-
-      if (
-        answerValue === currentQuestion.chosenAnswer ||
-        answerObject.correct
-      ) {
-        if (answerObject.correct) {
-          answerLine.append("O");
-        } else {
-          answerLine.append("X");
-        }
-      }
-
-      //  WITHOUT NEXT BUTTON
-      // nextBtn.classList.add("hide");
-    }
-
-    answersList.append(answerLine);
-  }
-  return answersList;
-}
-
-let updatedRandomQuiz;
-
-function renderCurrentQuestionToForm(
-  quiz,
-  currentIndex,
-  formElem,
-  isResult = false
-) {
-  // console.log("currentIndex", currentIndex);
-
+function renderCurrentQuestionToForm(quiz, currentIndex, formElem) {
+  console.log("formElem", formElem);
   formElem.innerHTML = "";
   const questionBox = document.createElement("div");
   questionBox.classList.add("question-box");
   questionBox.id = "question-box";
   const questionCountdown = document.createElement("span");
+  // console.log("quiz.length", quiz.length);
   questionCountdown.innerHTML = `Question ${currentIndex + 1} of ${
     quiz.length
   }`;
@@ -162,115 +120,89 @@ function renderCurrentQuestionToForm(
   const questionElem = document.createElement("p");
   questionElem.classList.add("question");
   questionElem.id = "question";
+  // console.log("currentIndex", currentIndex);
+  // console.log("randomQuiz", quiz);
+  // transfer to other function
   questionElem.innerHTML = quiz[currentIndex]["question"];
   questionBox.append(questionElem);
 
-  const answersList = renderAnswerOptions(quiz, currentIndex, isResult);
-  questionBox.append(answersList);
+  // answers/ write new function
+  const answersArray = quiz[currentIndex]["answersArray"];
+  console.log("answersArray", answersArray);
+  const answersList = document.createElement("ul");
+  answersList.classList.add("answers");
 
+  for (let arrAnswer in answersArray) {
+    const answerValue = answersArray[arrAnswer]["answer"];
+
+    const answerLine = document.createElement("li");
+    answerLine.classList.add("answer");
+    answerLine.id = "answer";
+    const radioButton = document.createElement("input");
+    radioButton.setAttribute("type", "radio");
+    radioButton.name = "radio";
+    radioButton.value = answerValue;
+
+    const label = document.createElement("label");
+    label.innerHTML = answerValue;
+    answerLine.append(radioButton);
+    answerLine.append(label);
+    answersList.append(answerLine);
+    questionBox.append(answersList);
+    // questionBox.append(nextBtn);
+  }
+  console.log("questionBox", questionBox);
   formElem.append(questionBox);
   formElem.append(nextBtn);
-  nextBtn.disabled = true;
+
+  console.log(formElem);
   return formElem;
 }
 
-//  WITHOUT NEXT BUTTON
-// function renderCurrentQuestionToForm(quiz, currentIndex, formElem, isResult) {
-//   if (!isResult || (isResult && currentIndex === 0)) {
-//     formElem.innerHTML = "";
-//   }
-//   const questionBox = document.createElement("div");
-//   questionBox.classList.add("question-box");
-//   questionBox.id = "question-box";
-//   const questionCountdown = document.createElement("span");
-//   questionCountdown.innerHTML = `Question ${currentIndex + 1} of ${
-//     quiz.length
-//   }`;
-//   questionBox.append(questionCountdown);
-//   const questionElem = document.createElement("p");
-//   questionElem.classList.add("question");
-//   questionElem.id = "question";
-//   questionElem.innerHTML = quiz[currentIndex]["question"];
-//   questionBox.append(questionElem);
+// console.log(renderCurrentQuestionToForm(randomQuiz, 1));
+// const randomQuizA = getRandomQuestions(quizQuestions.math);
 
-//   const answersList = renderAnswerOptions(quiz, currentIndex, isResult);
-//   questionBox.append(answersList);
-
-//   formElem.append(questionBox);
-//   formElem.append(nextBtn);
-//   return formElem;
-// }
+// console.log(
+//   "renderCurrentQuestionToForm(getRandomQuestions(quizQuestions.math))",
+//   renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex)
+// );
 
 const startBtn = document.querySelector("#start-btn");
-const nextBtn = document.querySelector("#next-btn");
-const resultBtn = document.querySelector("#result-btn");
 
 startBtn.addEventListener("click", startQuiz);
-if (document.querySelector('input[type="radio"]:checked')) {
-  nextBtn.disabled = false;
-  nextBtn.addEventListener("click", loadNextQuestion);
-}
+nextBtn.addEventListener("click", loadNextQuestion);
 
 function startQuiz() {
   startBtn.classList.add("hide");
   nextBtn.classList.remove("hide");
-  renderCurrentQuestionToForm(
-    getRandomQuestions(quizQuestions.math),
-    currentQuestionIndex,
-    formElem
-  );
+  // console.log("currentQuestionIndex", currentQuestionIndex);
+  // console.log("randomQuiz.length", randomQuiz.length);
+
+  renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex, formElem);
 }
 
-function loadNextQuestion() {
-  if (currentQuestionIndex < randomQuiz.length) {
-    updateChosenAnswers(currentQuestionIndex);
-  }
+console.log(formElem);
 
+function loadNextQuestion() {
+  // event.preventDefault();
+  // console.log("currentQuestionIndex", currentQuestionIndex);
+  // console.log(formElem);
+
+  // while (currentQuestionIndex) {
+
+  // } else {
+  // console.log(questionBox);
   currentQuestionIndex++;
 
   if (currentQuestionIndex < randomQuiz.length) {
+    // questionBox.remove();
+    // console.log("currentQuestionIndex", currentQuestionIndex);
     renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex, formElem);
-  } else if (currentQuestionIndex < randomQuiz.length * 2) {
-    renderCurrentQuestionToForm(
-      randomQuiz,
-      currentQuestionIndex - randomQuiz.length,
-      formElem,
-      true
-    );
   } else {
-    console.log("You're done!");
+    // renderResults()
+    console.log("result!!!");
   }
+  // }
+  // }
 }
-
-//  WITHOUT NEXT BUTTON
-// function loadNextQuestion() {
-//   if (currentQuestionIndex < randomQuiz.length) {
-//     updateChosenAnswers(currentQuestionIndex);
-//   }
-
-//   currentQuestionIndex++;
-
-//   if (currentQuestionIndex < randomQuiz.length) {
-//     renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex, formElem);
-//   } else if (currentQuestionIndex < randomQuiz.length * 2) {
-//     while (currentQuestionIndex < randomQuiz.length * 2) {
-//       renderCurrentQuestionToForm(
-//         randomQuiz,
-//         currentQuestionIndex - randomQuiz.length,
-//         formElem,
-//         true
-//       );
-//       currentQuestionIndex++;
-//     }
-//   } else {
-//     console.log("You're done!");
-//   }
-// }
-
-function updateChosenAnswers(questionIndex) {
-  console.log("questionIndex", questionIndex);
-
-  const selected = document.querySelector("input[type='radio']:checked").value;
-  console.log("selected", selected);
-  randomQuiz[questionIndex]["chosenAnswer"] = Number(selected);
-}
+// console.log(loadNextQuestion(questionBox));
