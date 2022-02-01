@@ -163,9 +163,9 @@ function renderSkillsLevelQuiz(skillLevels, subjects) {
 // RESULTS
 const submitBtnForAnswers = document.getElementById("submitBtnForAnswers");
 submitBtnForAnswers.addEventListener("click", () => {
-  alertEmptyFields();
   showAnswersOnAnotherPage();
   showAnswersOnAnotherPage2();
+  alertEmptyFields();
 });
 
 function alertEmptyFields() {
@@ -191,16 +191,17 @@ function alertEmptyFields() {
       }
     });
   }
-  if (isEmptyInput && isNotChecked) {
-    alert("Please fill and select all the fields in red!");
-  } else if (isEmptyInput) {
-    alert("Please fill all the fields in red!");
-  } else {
-    alert("Please select all the fields in red!");
-  }
-  // red after alert
-}
 
+  setTimeout(() => {
+    if (isEmptyInput && isNotChecked) {
+      alert("Please fill and select all the fields in red!");
+    } else if (isEmptyInput) {
+      alert("Please fill all the fields in red!");
+    } else {
+      alert("Please select all the fields in red!");
+    }
+  });
+}
 function showAnswersOnAnotherPage2() {
   for (let subject in chosenSkillLevelAnswers) {
     const subjectLine = document.createElement("h3");

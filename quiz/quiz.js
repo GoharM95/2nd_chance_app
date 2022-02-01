@@ -170,10 +170,10 @@ function renderCurrentQuestionToForm(
 }
 
 //  WITHOUT NEXT BUTTON
-// const quizResult = document.getElementById("quiz-result");
-// function renderCurrentQuestionToForm(quiz, currentIndex, quizResult, isResult) {
+// const quizContainer = document.getElementById("quiz-result");
+// function renderCurrentQuestionToForm(quiz, currentIndex, quizContainer, isResult) {
 //   if (!isResult || currentIndex === 0) {
-//     quizResult.innerHTML = "";
+//     quizContainer.innerHTML = "";
 //   }
 
 //   const questionBox = document.createElement("form");
@@ -194,9 +194,9 @@ function renderCurrentQuestionToForm(
 //   const answersList = renderAnswerOptions(quiz, currentIndex, isResult);
 //   questionBox.append(answersList);
 
-//   quizResult.append(questionBox);
-//   quizResult.append(nextBtn);
-//   return quizResult;
+//   quizContainer.append(questionBox);
+//   quizContainer.append(nextBtn);
+//   return quizContainer;
 // }
 
 const startBtn = document.querySelector("#start-btn");
@@ -213,38 +213,67 @@ nextBtn.addEventListener("click", loadNextQuestion);
 
 const timer = document.querySelector("#timer");
 
-function timerCountdown() {
-  let seconds = 30;
-
-  const timerId = setInterval(updateCountdown, 1000);
-  function updateCountdown() {
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-    timer.innerHTML = `00 : ${seconds}`;
-    seconds--;
-    if (seconds === -1) {
-      clearTimeout(timerId);
-    }
-  }
-}
-
 function startQuiz() {
+  resetTimer();
+  startTimer();
   form.classList.remove("hide");
 
-  timerCountdown();
   startBtn.classList.add("hide");
   nextBtn.classList.remove("hide");
   renderCurrentQuestionToForm(
     buildRandomQuestions(quizQuestions.math, currentQuestionIndex),
     currentQuestionIndex,
-    // quizResult
+    // quizContainer
     formElem
   );
 }
 
-function loadNextQuestion() {
-  // clearTimeout(timerId);
+function buildTimer() {
+  let timerId = null;
+  const allowedTime = 30;
+  let seconds = allowedTime;
 
-  timerCountdown();
+  function updateCountdown() {
+    seconds--;
+    console.log("seconds", seconds);
+  }
+
+  function renderTime() {
+    const secondsText = seconds < 10 ? "0" + seconds : seconds;
+    timer.innerHTML = `00 : ${secondsText}`;
+  }
+
+  function startTimer() {
+    timerId = setInterval(() => {
+      if (seconds === 0) {
+        pauseTimer();
+        console.log("stop");
+        // clearInterval(timerId);
+        return;
+      }
+      updateCountdown();
+      renderTime();
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    clearInterval(timerId);
+  }
+
+  function resetTimer() {
+    seconds = allowedTime;
+    clearInterval(timerId);
+    renderTime();
+  }
+  return { startTimer, resetTimer };
+}
+
+const { startTimer, resetTimer } = buildTimer();
+
+function loadNextQuestion() {
+  resetTimer();
+  startTimer();
+
   if (currentQuestionIndex < randomQuiz.length) {
     updateChosenAnswers(currentQuestionIndex);
     nextBtn.disabled = false;
@@ -283,13 +312,13 @@ function loadNextQuestion() {
 //   currentQuestionIndex++;
 
 //   if (currentQuestionIndex < randomQuiz.length) {
-//     renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex, quizResult);
+//     renderCurrentQuestionToForm(randomQuiz, currentQuestionIndex, quizContainer);
 //   } else if (currentQuestionIndex < randomQuiz.length * 2) {
 //     while (currentQuestionIndex < randomQuiz.length * 2) {
 //       renderCurrentQuestionToForm(
 //         randomQuiz,
 //         currentQuestionIndex - randomQuiz.length,
-//         quizResult,
+//         quizContainer,
 //         true
 //       );
 //       currentQuestionIndex++;
