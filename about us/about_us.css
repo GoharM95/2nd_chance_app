@@ -6,3 +6,65 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
+
+body {
+  margin: 30px;
+  line-height: 25px;
+  text-indent: 15px;
+}
+
+.hide {
+  display: none;
+}
+
+h2 {
+  text-indent: 30px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+input[type="checkbox"] {
+  filter: grayscale(1);
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+.candidate-trait {
+  display: flex;
+}
+
+.candidate-traits {
+  margin-bottom: 15px;
+}
+
+.p-underline {
+  text-decoration: underline;
+  font-size: 20px;
+}
+
+.program-stages {
+  display: flex;
+  margin-top: 20px;
+}
+
+.programStageBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid black;
+  border-radius: 10px;
+  width: 300px;
+  height: 100px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.program-stage-info {
+  margin: 15px 0px;
+  border: 2px solid black;
+}
+
+.known-obstacles ul {
+  list-style: none;
+}
