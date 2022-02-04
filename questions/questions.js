@@ -24,6 +24,8 @@ const startingQuestions = [
   },
 ];
 
+const body = document.querySelector("body");
+
 function renderStartingQuestions(startingQuestions) {
   const questionList = document.createElement("ul");
 
@@ -33,8 +35,8 @@ function renderStartingQuestions(startingQuestions) {
       "starting-questions-box"
     );
     startingQuestionsBox.append(questionList);
-    const eachQuestionElem = document.createElement("p");
-    eachQuestionElem.innerHTML = question;
+    const currentQuestionElem = document.createElement("p");
+    currentQuestionElem.innerHTML = question;
     const inputElem = document.createElement("textarea");
     inputElem.name = `question${i}`;
 
@@ -42,8 +44,8 @@ function renderStartingQuestions(startingQuestions) {
 
     inputElem.addEventListener("input", updateInputAnswer);
     // add autofocus
-    eachQuestionElem.append(inputElem);
-    questionList.append(eachQuestionElem);
+    currentQuestionElem.append(inputElem);
+    questionList.append(currentQuestionElem);
   }
 }
 
@@ -52,7 +54,6 @@ function makeInputHandler(inputName, index) {
     if (inputName === event.target.name) {
       startingQuestions[index].answer = event.target.value;
     }
-    // console.log("startingQuestions", startingQuestions);
     return startingQuestions;
   }
   return updateInputAnswer;
@@ -61,14 +62,15 @@ function makeInputHandler(inputName, index) {
 const answerBoxElem = document.getElementById("questions_answers");
 
 // RESULTS
-function showAnswersOnAnotherPage() {
+function renderStartingQuestionsResults() {
   for (question of startingQuestions) {
-    const questionLine = document.createElement("p");
+    const questionLine = document.createElement("h4");
     questionLine.append(question.question);
     const answerLine = document.createElement("p");
     answerLine.append(question.answer);
     questionLine.append(answerLine);
     answerBoxElem.append(questionLine);
+    body.append(answerBoxElem);
   }
 }
 
@@ -106,21 +108,21 @@ function makeButtonClickHandler(subject) {
     if (subject === event.target.name) {
       chosenSkillLevelAnswers[subject].chosenAnswer = event.target.value;
     }
-    // console.log("chosenSkillLevelAnswers", chosenSkillLevelAnswers);
+    console.log("chosenSkillLevelAnswers", chosenSkillLevelAnswers);
     return chosenSkillLevelAnswers;
   }
   return handleSubjectButtonClick;
 }
 // function handleMathButtonClick(event) {
-//   chosenSkillLevelAnswers.math.chosenAnswer = event.target.value; // or with Number
+//   chosenSkillLevelAnswers.math.chosenAnswer = event.target.value;
 // }
 
 // function handleEnglishButtonClick(event) {
-//   chosenSkillLevelAnswers.english.chosenAnswer = event.target.value; // or with Number
+//   chosenSkillLevelAnswers.english.chosenAnswer = event.target.value;
 // }
 
 // function handleJavascriptButtonClick(event) {
-//   chosenSkillLevelAnswers.javascript.chosenAnswer = event.target.value; // or with Number
+//   chosenSkillLevelAnswers.javascript.chosenAnswer = event.target.value;
 // }
 
 function renderSkillsLevelQuiz(skillLevels, subjects) {
@@ -163,8 +165,6 @@ function renderSkillsLevelQuiz(skillLevels, subjects) {
 // RESULTS
 const submitBtnForAnswers = document.getElementById("submitBtnForAnswers");
 submitBtnForAnswers.addEventListener("click", () => {
-  showAnswersOnAnotherPage();
-  showAnswersOnAnotherPage2();
   alertEmptyFields();
 });
 
@@ -192,23 +192,50 @@ function alertEmptyFields() {
     });
   }
 
+  const dialog = document.getElementById("dialog");
+  const dialogWarning = document.getElementById("dialogWarningContent");
+  const overlay = document.getElementById("overlay");
+  const okBtn = document.getElementById("ok-btn");
+
+  function closeDialog() {
+    dialog.classList.remove("active");
+    overlay.classList.remove("active");
+  }
+
+  okBtn.addEventListener("click", closeDialog);
+
   setTimeout(() => {
     if (isEmptyInput && isNotChecked) {
-      alert("Please fill and select all the fields in red!");
+      dialogWarning.innerHTML = "Please fill and select all the fields in red!";
+      dialog.classList.add("active");
+      overlay.classList.add("active");
     } else if (isEmptyInput) {
-      alert("Please fill all the fields in red!");
+      dialogWarning.innerHTML = "Please fill all the fields in red!";
+      dialog.classList.add("active");
+      overlay.classList.add("active");
+    } else if (isNotChecked) {
+      dialogWarning.innerHTML = "Please select all the fields in red!";
+      dialog.classList.add("active");
+      overlay.classList.add("active");
     } else {
-      alert("Please select all the fields in red!");
+      body.innerHTML = "";
+      const results = document.createElement("h1");
+      results.classList.add("results");
+      results.innerHTML = "Results";
+      body.append(results);
+      renderStartingQuestionsResults();
+      renderSkillsLevelQuizResults();
     }
   });
 }
-function showAnswersOnAnotherPage2() {
+function renderSkillsLevelQuizResults() {
   for (let subject in chosenSkillLevelAnswers) {
-    const subjectLine = document.createElement("h3");
+    const subjectLine = document.createElement("h4");
     subjectLine.append(subject.toUpperCase());
     const skillLevelLine = document.createElement("p");
     skillLevelLine.append(chosenSkillLevelAnswers[subject].chosenAnswer);
     subjectLine.append(skillLevelLine);
     answerBoxElem.append(subjectLine);
+    body.append(answerBoxElem);
   }
 }

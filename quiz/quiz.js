@@ -1,22 +1,8 @@
-// Timer
-// const startingMins = 20;
-// let time = startingMins * 60;
-// const timer = document.querySelector("#timer");
-// setInterval(updateCountdown, 1000);
-
-// function updateCountdown() {
-//   const mins = Math.floor(time / 60);
-//   // console.log("time", time);
-//   let seconds = time % 60;
-//   // console.log("seconds", seconds);
-//   seconds = seconds < 10 ? "0" + seconds : seconds;
-//   timer.innerHTML = `${mins} : ${seconds} `;
-//   time--;
-// }
-
 const form = document.querySelector("form");
+// const timer = document.querySelectorAll("#timer");
 window.onload = () => {
   form.classList.add("hide");
+  timer.classList.add("hide");
 };
 
 const quizQuestions = {
@@ -146,7 +132,6 @@ function renderCurrentQuestionToForm(
   formElem,
   isResult = false
 ) {
-  // console.log("currentIndex", currentIndex);
   formElem.innerHTML = "";
   const questionBox = document.createElement("div");
   questionBox.classList.add("question-box");
@@ -340,5 +325,3 @@ function updateChosenAnswers(questionIndex) {
 // formElem.addEventListener("submit", (event) => {
 //   event.preventDefault();
 // });
-// next disable
-// timer

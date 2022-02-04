@@ -1,52 +1,9 @@
-// 1. Not believing in themselves. i.e. // low self-esteem
-// a.They don’t think they are capable enough to do it.
-// Fix: we all can be better at something. Let’s find out if you can be a puzzle solver.
-// b. Believes in conspiracies. i.e. the game is rigged in favor of the rich, so “no matter what I do, I can’t get out of my situation.”
-// Fix: some people are luckier than others and start at a different position. However, only you are responsible for yourself. Pull yourself forward as far and as hard as you can.
-// c. Believes it’s too late for them. They can’t learn new things.
-// Fix: realise that it’s too late only if you think it is. You are old only if you think you are.
-
-// 2. Not truly wanting and being willing to pay the price i.e. do the work.
-// a. Too lazy
-// Fix: work as hell.
-// b. Too much of a rebel. i.e. doesn’t want to be a part of a system/company and have a boss.
-// Fix: Realise that if success keeps avoiding you, you are doing something wrong. Change your worldview.
-// c. Prefers flexibility in life (lack of responsibility) to stability a little too much.
-// Fix: Learn to appreciate having routines where you are responsible to others even if that causes some stress.
-// d. Arrogance. Thinks he/she is smarter than others and doesn't have the humility to recognise his/her own shortcomings and improve upon those.
-// Fix: recognize that you can learn something from everyone and find pleasure in doing high quality work no matter what it is. Doors usually open to people with this attitude.
-
-// 3. Impatience.
-// Fix: sustainable things worth having take time and great deal of effort.
-// 4. Focus on money rather than the study and the work.
-// Fix: if you just want to make more money, it will be hard to get through all the challenges along the way. If you find a way to enjoy the process, then money will be an inevitable reward at the end.
-// 5. Not understanding how much work it is before starting.
-// Fix: it will take 6-24 months day and night studying before you become hireable.
-// 6. Not having enough and/or right resources
-// a. money/living expenses.
-// Fix: have savings. The program can help.
-// b. access to a computer and the internet.
-// Fix: save and buy. The program can help.
-// c. time to study and practice.
-// Fix: lower your overhead. Reduce everything else you do, e.g. your day job hours.
-// d. curriculum, books, tutorials, mentorship.
-// Fix: the internet provides a wide variety of free or cheap resources. The program can help.
-// e. lack of english literacy.
-// Fix: learn english.
-// f. emotional support (family, friends, teachers, etc.).
-// Fix: surround yourself with supportive people. Stay away from negative ones. This might be difficult, but is worth it.
-// 7. Potential industry prejudices against the candidate’s age and gender.
-// Fix: competent professionals with good work ethics are in high demand. Become so good at what you do, that no one can dismiss you.
-// 8. Planning poorly and not adapting it along the way.
-// Fix: keep a feedback loop and keep improving.
-
 window.onload = () => {
   renderCandidateTraits(candidateTraits);
   renderProgramStageInfo(programStages);
   renderKnownObstacles(knownObstacles);
 };
 
-// RENDER BOXES OF DIFFERENT COLORS WITH CHECK SIGN
 const candidateTraitsBox = document.getElementById("candidate-traits");
 candidateTraitsBox.classList.add("candidate-traits");
 
@@ -64,7 +21,6 @@ function renderCandidateTraits(candidateTraits) {
   for (let candidateTrait of candidateTraits) {
     const candidateTraitBox = document.createElement("div");
     candidateTraitBox.classList.add("candidate-trait");
-    // candidateTraitBox.append(candidateTrait);
     const candidateTraitDescription = document.createElement("p");
     const checkSign = document.createElement("input");
     checkSign.setAttribute("type", "checkbox");
@@ -108,11 +64,10 @@ const programStages = [
 
 const programStagesBox = document.getElementById("program-stages");
 const programStageInfoElem = document.getElementById("program-stage-info");
-
+let index = 1;
 function renderProgramStageInfo(programStages) {
   for (let programStage of programStages) {
     const programStageBox = document.createElement("div");
-    // draw arrows between divs
     programStageBox.classList.add("programStageBox");
     programStageBox.id = programStage.programStage;
 
@@ -123,12 +78,26 @@ function renderProgramStageInfo(programStages) {
     programStageBox.append(programStageNameElem);
     programStagesBox.append(programStageBox);
 
+    // append arrow
+    if (index !== programStages.length) {
+      const arrow = document.createElement("span");
+      arrow.innerHTML = "&rarr;";
+      programStagesBox.append(arrow);
+      arrow.classList.add("arrow");
+    }
+
     programStageBox.addEventListener("click", (event) => {
       if (event.target.id === programStageBox.id) {
         programStageInfoElem.append(programStageInfo);
-        programStageInfoElem.classList.remove("hide");
+
+        if (programStageInfoElem.classList.contains("hide")) {
+          programStageInfoElem.classList.remove("hide");
+        } else {
+          programStageInfoElem.classList.add("hide");
+        }
       }
     });
+    index++;
   }
 }
 
@@ -159,36 +128,36 @@ const knownObstacles = [
       },
     ],
   },
-  // {
-  //   obstacleName: "Not willing to do the work",
-  //   obstacleSubCategories: [
-  //     {
-  //       name: "Too lazy",
-  //       obstacleFix: "Fix: work as hell.",
-  //     },
-  //     {
-  //       name: "Too much of a rebel",
-  //       subCategoryExplained:
-  //         "The game is rigged in favor of the rich, so “no matter what I do, I can’t get out of my situation.",
-  //       obstacleFix:
-  //         "Fix: Realise that if success keeps avoiding you, you are doing something wrong. Change your worldview.",
-  //     },
-  //     {
-  //       name: "Lack of responsibility",
-  //       subCategoryExplained:
-  //         "Prefers flexibility in life to stability a little too much.",
-  //       obstacleFix:
-  //         "Fix: Learn to appreciate having routines where you are responsible to others even if that causes some stress.",
-  //     },
-  //     {
-  //       name: "Arrogance",
-  //       subCategoryExplained:
-  //         "Thinks he/she is smarter than others and doesn't have the humility to recognise his/her own shortcomings and improve upon those.",
-  //       obstacleFix:
-  //         "Fix: recognize that you can learn something from everyone and find pleasure in doing high quality work no matter what it is. Doors usually open to people with this attitude.",
-  //     },
-  //   ],
-  // },
+  {
+    obstacleName: "Not willing to do the work",
+    obstacleSubCategories: [
+      {
+        name: "Too lazy",
+        obstacleFix: "Fix: work as hell.",
+      },
+      {
+        name: "Too much of a rebel",
+        subCategoryExplained:
+          "The game is rigged in favor of the rich, so “no matter what I do, I can’t get out of my situation.",
+        obstacleFix:
+          "Fix: Realise that if success keeps avoiding you, you are doing something wrong. Change your worldview.",
+      },
+      {
+        name: "Lack of responsibility",
+        subCategoryExplained:
+          "Prefers flexibility in life to stability a little too much.",
+        obstacleFix:
+          "Fix: Learn to appreciate having routines where you are responsible to others even if that causes some stress.",
+      },
+      {
+        name: "Arrogance",
+        subCategoryExplained:
+          "Thinks he/she is smarter than others and doesn't have the humility to recognise his/her own shortcomings and improve upon those.",
+        obstacleFix:
+          "Fix: recognize that you can learn something from everyone and find pleasure in doing high quality work no matter what it is. Doors usually open to people with this attitude.",
+      },
+    ],
+  },
   {
     obstacleName: "Impatience",
     obstacleFix:
@@ -200,97 +169,99 @@ const knownObstacles = [
     obstacleFix:
       "Fix: if you just want to make more money, it will be hard to get through all the challenges along the way. If you find a way to enjoy the process, then money will be an inevitable reward at the end.",
   },
-  // {
-  //   obstacleName: "Amount of work",
-  //   obstacleExplained: "Not understanding how much work it is before starting.",
-  //   obstacleFix:
-  //     "Fix: it will take 6-24 months day and night studying before you become hireable.",
-  // },
-  // {
-  //   obstacleName: "Not enough resources",
-  //   obstacleSubCategories: [
-  //     {
-  //       name: "money/living expenses.",
-  //       obstacleFix: "Fix: have savings. The program can help.",
-  //     },
-  //     {
-  //       name: "computer/internet",
-  //       subCategoryExplained: "Access to a computer and the internet",
-  //       obstacleFix: "Fix: save and buy. The program can help.",
-  //     },
-  //     {
-  //       name: "time to study and practice.",
-  //       obstacleFix:
-  //         "Fix: lower your overhead. Reduce everything else you do, e.g. your day job hours.",
-  //     },
-  //     {
-  //       name: "resources",
-  //       subCategoryExplained: "curriculum, books, tutorials, mentorship.",
-  //       obstacleFix:
-  //         "Fix: the internet provides a wide variety of free or cheap resources. The program can help.",
-  //     },
-  //     {
-  //       name: "lack of english literacy.",
-  //       obstacleFix: "Fix: learn english.",
-  //     },
-  //     {
-  //       name: "emotional support",
-  //       subCategoryExplained: "family, friends, teachers, etc.",
-  //       obstacleFix:
-  //         "Fix: surround yourself with supportive people. Stay away from negative ones. This might be difficult, but is worth it.",
-  //     },
-  //   ],
-  // },
-  // {
-  //   obstacleName: "Industry prejudices",
-  //   obstacleExplained:
-  //     "Potential industry prejudices against the candidate’s age and gender.",
-  //   obstacleFix:
-  //     "Fix: competent professionals with good work ethics are in high demand. Become so good at what you do, that no one can dismiss you.",
-  // },
+  {
+    obstacleName: "Amount of work",
+    obstacleExplained: "Not understanding how much work it is before starting.",
+    obstacleFix:
+      "Fix: it will take 6-24 months day and night studying before you become hireable.",
+  },
+  {
+    obstacleName: "Not enough resources",
+    obstacleSubCategories: [
+      {
+        name: "Money/living expenses.",
+        obstacleFix: "Fix: have savings. The program can help.",
+      },
+      {
+        name: "Computer/internet",
+        subCategoryExplained: "Access to a computer and the internet",
+        obstacleFix: "Fix: save and buy. The program can help.",
+      },
+      {
+        name: "Time to study and practice.",
+        obstacleFix:
+          "Fix: lower your overhead. Reduce everything else you do, e.g. your day job hours.",
+      },
+      {
+        name: "Resources",
+        subCategoryExplained: "curriculum, books, tutorials, mentorship.",
+        obstacleFix:
+          "Fix: the internet provides a wide variety of free or cheap resources. The program can help.",
+      },
+      {
+        name: "Lack of english literacy.",
+        obstacleFix: "Fix: learn english.",
+      },
+      {
+        name: "Emotional support",
+        subCategoryExplained: "family, friends, teachers, etc.",
+        obstacleFix:
+          "Fix: surround yourself with supportive people. Stay away from negative ones. This might be difficult, but is worth it.",
+      },
+    ],
+  },
+  {
+    obstacleName: "Industry prejudices",
+    obstacleExplained:
+      "Potential industry prejudices against the candidate’s age and gender.",
+    obstacleFix:
+      "Fix: competent professionals with good work ethics are in high demand. Become so good at what you do, that no one can dismiss you.",
+  },
 
-  // {
-  //   obstacleName: "Poor planning",
-  //   obstacleExplained: "Planning poorly and not adapting it along the way.",
-  //   obstacleFix: "Fix: keep a feedback loop and keep improving.",
-  // },
+  {
+    obstacleName: "Poor planning",
+    obstacleExplained: "Planning poorly and not adapting it along the way.",
+    obstacleFix: "Fix: keep a feedback loop and keep improving.",
+  },
 ];
 
 const knownObstaclesBox = document.getElementById("known-obstacles");
 const withSubcategoriesBox = document.getElementById("subcategories");
 
 let mutualId = 0;
+let quantity = 0;
+const firstColumn = document.createElement("div");
+firstColumn.classList.add("first-column");
+const secondColumn = document.createElement("div");
+secondColumn.classList.add("second-column");
+
 function renderKnownObstacles(knownObstacles) {
   for (let obstacle of knownObstacles) {
     if (obstacle.hasOwnProperty("obstacleName")) {
       const obstacleNameBoxElem = document.createElement("div");
-      obstacleNameBoxElem.id = `${mutualId}`;
+      obstacleNameBoxElem.classList.add("obstacle");
+
       const obstacleNameElem = document.createElement("h3");
-      // obstacleNameElem.addEventListener("click", (event) => {
-      //   if (
-      //     event.target.id === mutualId &&
-      //     withSubcategoriesBox.classList.contains("withSubcategoriesBox")
-      //   ) {
-      //     withSubcategoriesBox.classList.remove("hide");
-      //   } else if (
-      //     event.target.id === mutualId &&
-      //     withoutSubcategoriesBox.classList.contains("withoutSubcategoriesBox")
-      //   ) {
-      //     withoutSubcategoriesBox.classList.remove("hide");
-      //   }
-      // });
       obstacleNameElem.append(obstacle.obstacleName);
       obstacleNameBoxElem.append(obstacleNameElem);
-      knownObstaclesBox.append(obstacleNameBoxElem);
+      obstacleNameBoxElem.id = `obstacle${mutualId}`;
+      if (quantity < 4) {
+        firstColumn.append(obstacleNameBoxElem);
+      } else {
+        secondColumn.append(obstacleNameBoxElem);
+      }
+      knownObstaclesBox.append(firstColumn);
+      knownObstaclesBox.append(secondColumn);
+      quantity++;
     }
 
     const withSubcategoriesBox = document.createElement("ul");
-    withSubcategoriesBox.classList.add("withSubcategoriesBox hide");
+    withSubcategoriesBox.classList.add("hide");
     if (obstacle.hasOwnProperty("obstacleSubCategories")) {
       const subcategoriesArray = obstacle.obstacleSubCategories;
       for (let i = 0; i < subcategoriesArray.length; i++) {
         const listItem = document.createElement("li");
-        withSubcategoriesBox.id = `${mutualId}`;
+        withSubcategoriesBox.id = `ul${mutualId}`;
         if (subcategoriesArray[i].hasOwnProperty("name")) {
           const subcategoryName = document.createElement("h4");
           subcategoryName.append(subcategoriesArray[i].name);
@@ -319,7 +290,7 @@ function renderKnownObstacles(knownObstacles) {
     }
 
     const withoutSubcategoriesBox = document.createElement("ul");
-    // withoutSubcategoriesBox.classList.add("withoutSubcategoriesBox hide");
+    withoutSubcategoriesBox.classList.add("hide");
     if (obstacle.hasOwnProperty("obstacleExplained")) {
       const obstacleExplained = document.createElement("p");
       obstacleExplained.append(obstacle.obstacleExplained);
@@ -333,6 +304,8 @@ function renderKnownObstacles(knownObstacles) {
       const obstacleFix = document.createElement("p");
       obstacleFix.append(obstacle.obstacleFix);
       const listItem = document.createElement("li");
+      withoutSubcategoriesBox.id = `ul${mutualId}`;
+
       listItem.append(obstacleFix);
       withoutSubcategoriesBox.append(listItem);
       knownObstaclesBox.append(withoutSubcategoriesBox);
@@ -340,4 +313,29 @@ function renderKnownObstacles(knownObstacles) {
 
     mutualId++;
   }
+  const subcategoriesInfo = document.getElementById("subcategories");
+  const allKnownObstacles = document.querySelectorAll(".obstacle");
+  console.log("allKnownObstacles", allKnownObstacles);
+  for (let knownObstacle of allKnownObstacles) {
+    knownObstacle.addEventListener("click", () => {
+      const currentObstacleId = knownObstacle.id;
+      const currentObstacleIdLastDigit =
+        currentObstacleId[currentObstacleId.length - 1];
+      const currentObstacleInfo = document.getElementById(
+        `ul${currentObstacleIdLastDigit}`
+      );
+      if (currentObstacleInfo.classList.contains("hide")) {
+        subcategoriesInfo.innerHTML = "";
+        subcategoriesInfo.append(currentObstacleInfo);
+        currentObstacleInfo.classList.remove("hide");
+      } else {
+        subcategoriesInfo.append(currentObstacleInfo);
+        currentObstacleInfo.classList.add("hide");
+      }
+    });
+  }
 }
+
+// fix subcategories bug
+// programStages click fix
+// draw arrows between divs
