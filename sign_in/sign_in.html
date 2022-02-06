@@ -6,14 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
     <link rel="stylesheet" href="sign_in.css" />
+    <script defer src="sign_in.js"></script>
   </head>
   <body>
-    <form name="sign_up_form" action="/">
+    <form name="sign_in_form" action="/">
       <h1>Sign In</h1>
-      <input type="email" name="email" placeholder="Enter email" />
-      <input type="password" name="pwd" placeholder="Password" required />
+      <input
+        type="email"
+        id="email"
+        name="currentEmail"
+        placeholder="Enter email"
+      />
+      <input
+        type="password"
+        id="password"
+        name="currentPassword"
+        placeholder="Password"
+        required
+      />
       <a class="forgot_pwd" href="">Forgot Password?</a>
-      <input type="submit" value="Sign In with Google" />
+      <input type="submit" id="sign-in-btn" value="Sign In" />
+      <a
+        class="linkToSignUp"
+        href="file:///Users/gohar/Desktop/2nd_chance_app/sign_up/sign_up.html"
+        >Go to Sign up</a
+      >
+
+      <div id="dialog" class="dialog">
+        <h1 id="dialogWarningContent" class="dialogWarningContent"></h1>
+        <button id="ok-btn" class="ok-btn">Ok</button>
+      </div>
+      <div id="overlay" class="overlay"></div>
     </form>
   </body>
 </html>

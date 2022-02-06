@@ -1,9 +1,9 @@
-const form = document.querySelector("form");
-// const timer = document.querySelectorAll("#timer");
-window.onload = () => {
-  form.classList.add("hide");
-  timer.classList.add("hide");
-};
+// const form = document.querySelector("form");
+// // const timer = document.querySelectorAll("#timer");
+// window.onload = () => {
+//   form.classList.add("hide");
+//   timer.classList.add("hide");
+// };
 
 const quizQuestions = {
   math: [
