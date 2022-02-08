@@ -1,9 +1,5 @@
-// from homepage
-// sign up btn click sign up html
-// sign in btn click sign in html
-
 window.onload = () => {
-  registerNewUser();
+  addInputHandlers();
 };
 
 const formElem = document.querySelector("form");
@@ -22,12 +18,12 @@ formElem.addEventListener("submit", (event) => {
   event.preventDefault();
 });
 
-const usersState = {
+const usersState = [];
+const userState = {
   name: null,
   surname: null,
   email: null,
   password: null,
-  confirmPwd: null,
 };
 
 const inputs = document.querySelectorAll("input");
@@ -35,30 +31,30 @@ const confirmPassword = document.getElementById("confirm-password");
 const signUpBtn = document.getElementById("sign-up-btn");
 
 signUpBtn.addEventListener("click", () => {
-  if (usersState.password !== usersState.confirmPwd) {
+  if (userState.password !== userState.confirmPwd) {
     dialogWarning.innerHTML = "Please recheck your password!";
     dialog.classList.add("active");
     overlay.classList.add("active");
   }
 });
 
-function makeInputValueHandler(usersState) {
-  function takeAndUpdateInputValue(event) {
+function makeInputChangeHandler(userState) {
+  function inputChangeHandler(event) {
     const filledUpName = event.target.value;
-    for (let category in usersState) {
+    for (let category in userState) {
       if (category === event.target.name) {
-        usersState[category] = filledUpName;
+        userState[category] = filledUpName;
       }
     }
   }
-
-  return takeAndUpdateInputValue;
+  usersState.push(userState);
+  return inputChangeHandler;
 }
 
-const takeAndUpdateInputValue = makeInputValueHandler(usersState);
+const inputChangeHandler = makeInputChangeHandler(userState);
 
-function registerNewUser() {
+function addInputHandlers() {
   inputs.forEach((input) => {
-    input.addEventListener("change", takeAndUpdateInputValue);
+    input.addEventListener("change", inputChangeHandler);
   });
 }

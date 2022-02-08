@@ -335,7 +335,3 @@ function renderKnownObstacles(knownObstacles) {
     });
   }
 }
-
-// fix subcategories bug
-// programStages click fix
-// draw arrows between divs

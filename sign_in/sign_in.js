@@ -1,5 +1,5 @@
 window.onload = () => {
-  checkSignedUpUser();
+  addEventListenersToCurrentInput();
 };
 
 const formElem = document.querySelector("form");
@@ -44,8 +44,8 @@ signInBtn.addEventListener("click", () => {
   }
 });
 
-function makeInputValueHandler(signedUpUserState) {
-  function takeAndUpdateInputValue(event) {
+function makeInputChangeHandler(signedUpUserState) {
+  function inputChangeHandler(event) {
     const filledUpName = event.target.value;
     for (let category in signedUpUserState) {
       if (category === event.target.name) {
@@ -54,13 +54,13 @@ function makeInputValueHandler(signedUpUserState) {
     }
   }
 
-  return takeAndUpdateInputValue;
+  return inputChangeHandler;
 }
 
-const takeAndUpdateInputValue = makeInputValueHandler(signedUpUserState);
+const inputChangeHandler = makeInputChangeHandler(signedUpUserState);
 
-function checkSignedUpUser() {
+function addEventListenersToCurrentInput() {
   inputs.forEach((input) => {
-    input.addEventListener("change", takeAndUpdateInputValue);
+    input.addEventListener("change", inputChangeHandler);
   });
 }
