@@ -33,3 +33,7 @@ body {
   display: table-cell;
   vertical-align: middle;
 }
+
+.candidate_info a {
+  color: #e7b5ac;
+}

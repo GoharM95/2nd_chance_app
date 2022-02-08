@@ -4,8 +4,8 @@ window.onload = () => {
   renderKnownObstacles(knownObstacles);
 };
 
+function programStagesGuide() {}
 const candidateTraitsBox = document.getElementById("candidate-traits");
-candidateTraitsBox.classList.add("candidate-traits");
 
 const candidateTraits = [
   "Ability and willingness to focus on the transition for 6-24 month at least.",
@@ -62,6 +62,15 @@ const programStages = [
   },
 ];
 
+function appendArrow(programStages) {
+  if (index !== programStages.length) {
+    const arrow = document.createElement("span");
+    arrow.innerHTML = "&rarr;";
+    programStagesBox.append(arrow);
+    arrow.classList.add("arrow");
+  }
+}
+
 const programStagesBox = document.getElementById("program-stages");
 const programStageInfoElem = document.getElementById("program-stage-info");
 let index = 1;
@@ -79,15 +88,10 @@ function renderProgramStageInfo(programStages) {
     programStagesBox.append(programStageBox);
 
     // append arrow
-    if (index !== programStages.length) {
-      const arrow = document.createElement("span");
-      arrow.innerHTML = "&rarr;";
-      programStagesBox.append(arrow);
-      arrow.classList.add("arrow");
-    }
+    appendArrow(programStages);
 
     programStageBox.addEventListener("click", (event) => {
-      if (event.target.id === programStageBox.id) {
+      if (event.target === programStageBox) {
         programStageInfoElem.append(programStageInfo);
 
         if (programStageInfoElem.classList.contains("hide")) {
@@ -230,10 +234,8 @@ const withSubcategoriesBox = document.getElementById("subcategories");
 
 let mutualId = 0;
 let quantity = 0;
-const firstColumn = document.createElement("div");
-firstColumn.classList.add("first-column");
-const secondColumn = document.createElement("div");
-secondColumn.classList.add("second-column");
+const firstColumn = document.getElementById("first-column");
+const secondColumn = document.getElementById("second-column");
 
 function renderKnownObstacles(knownObstacles) {
   for (let obstacle of knownObstacles) {
@@ -261,7 +263,8 @@ function renderKnownObstacles(knownObstacles) {
       const subcategoriesArray = obstacle.obstacleSubCategories;
       for (let i = 0; i < subcategoriesArray.length; i++) {
         const listItem = document.createElement("li");
-        withSubcategoriesBox.id = `ul${mutualId}`;
+        withSubcategoriesBox.id = `list${mutualId}`;
+        // ?
         if (subcategoriesArray[i].hasOwnProperty("name")) {
           const subcategoryName = document.createElement("h4");
           subcategoryName.append(subcategoriesArray[i].name);
@@ -315,14 +318,13 @@ function renderKnownObstacles(knownObstacles) {
   }
   const subcategoriesInfo = document.getElementById("subcategories");
   const allKnownObstacles = document.querySelectorAll(".obstacle");
-  console.log("allKnownObstacles", allKnownObstacles);
   for (let knownObstacle of allKnownObstacles) {
     knownObstacle.addEventListener("click", () => {
       const currentObstacleId = knownObstacle.id;
       const currentObstacleIdLastDigit =
         currentObstacleId[currentObstacleId.length - 1];
       const currentObstacleInfo = document.getElementById(
-        `ul${currentObstacleIdLastDigit}`
+        `list${currentObstacleIdLastDigit}`
       );
       if (currentObstacleInfo.classList.contains("hide")) {
         subcategoriesInfo.innerHTML = "";
@@ -338,4 +340,4 @@ function renderKnownObstacles(knownObstacles) {
 
 // fix subcategories bug
 // programStages click fix
-// draw arrows between divs
+// 2 classes

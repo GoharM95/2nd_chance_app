@@ -1,10 +1,3 @@
-const form = document.querySelector("form");
-// const timer = document.querySelectorAll("#timer");
-window.onload = () => {
-  form.classList.add("hide");
-  timer.classList.add("hide");
-};
-
 const quizQuestions = {
   math: [
     {
@@ -72,7 +65,7 @@ function buildRandomQuestions(quizQuestionsArr, currentQuestionIndex) {
   return randomQuiz;
 }
 
-let formElem = document.querySelector("form");
+const formElem = document.querySelector("form");
 formElem.addEventListener("submit", (event) => {
   event.preventDefault();
 });
@@ -187,21 +180,18 @@ function renderCurrentQuestionToForm(
 const startBtn = document.querySelector("#start-btn");
 const nextBtn = document.querySelector("#next-btn");
 const resultBtn = document.querySelector("#result-btn");
+const body = document.querySelector("body");
 
 startBtn.addEventListener("click", startQuiz);
 nextBtn.addEventListener("click", loadNextQuestion);
-
-// if (document.querySelector('input[type="radio"]:checked')) {
-//   nextBtn.disabled = false;
-// nextBtn.addEventListener("click", loadNextQuestion);
-// }
 
 const timer = document.querySelector("#timer");
 
 function startQuiz() {
   resetTimer();
   startTimer();
-  form.classList.remove("hide");
+  formElem.classList.remove("hide");
+  timer.classList.remove("hide");
 
   startBtn.classList.add("hide");
   nextBtn.classList.remove("hide");
@@ -220,7 +210,6 @@ function buildTimer() {
 
   function updateCountdown() {
     seconds--;
-    console.log("seconds", seconds);
   }
 
   function renderTime() {
@@ -232,8 +221,6 @@ function buildTimer() {
     timerId = setInterval(() => {
       if (seconds === 0) {
         pauseTimer();
-        console.log("stop");
-        // clearInterval(timerId);
         return;
       }
       updateCountdown();
@@ -274,18 +261,17 @@ function loadNextQuestion() {
       formElem,
       true
     );
+  } else {
+    body.innerHTML = "";
+    const startOverBtnBox = document.createElement("div");
+    startOverBtnBox.classList.add("start-over-btn-box");
+    const startOverBtn = document.createElement("button");
+    startOverBtn.innerHTML = "Start Over";
+    startOverBtn.classList.add("start-over-btn");
+    startOverBtnBox.append(startOverBtn);
+    body.append(startOverBtnBox);
+    // startOverBtn.addEventListener("click", startQuiz);
   }
-  // else {
-  //   formElem.classList.add("hide");
-  //   // timer.classList.add("hide-timer");
-  //   // timer.classList.add("hide-timer");
-  //   const quizElem = document.querySelector("#quiz");
-  //   const startOverBtn = document.createElement("button");
-  //   startOverBtn.innerHTML = "Start Over";
-  //   quizElem.append(startOverBtn);
-  //   startOverBtn.classList.add("startOver-Btn");
-  //   startOverBtn.addEventListener("click", startQuiz);
-  // }
 }
 
 //  WITHOUT NEXT BUTTON
@@ -312,10 +298,7 @@ function loadNextQuestion() {
 // }
 
 function updateChosenAnswers(questionIndex) {
-  console.log("questionIndex", questionIndex);
-
   const selected = document.querySelector("input[type='radio']:checked").value;
-  console.log("selected", selected);
   randomQuiz[questionIndex].chosenAnswer = Number(selected);
   nextBtn.disabled = false;
 }
