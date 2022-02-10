@@ -92,13 +92,16 @@ function renderProgramStageInfo(programStages) {
 
     programStageBox.addEventListener("click", (event) => {
       if (event.target === programStageBox) {
+        // const isAlreadyShown =
+        programStageInfoElem.innerHTML = "";
+
         programStageInfoElem.append(programStageInfo);
 
-        if (programStageInfoElem.classList.contains("hide")) {
-          programStageInfoElem.classList.remove("hide");
-        } else {
-          programStageInfoElem.classList.add("hide");
-        }
+        // if (programStageInfoElem.classList.contains("hide")) {
+        //   programStageInfoElem.classList.remove("hide");
+        // } else {
+        //   programStageInfoElem.classList.add("hide");
+        // }
       }
     });
     index++;
@@ -252,8 +255,7 @@ function renderKnownObstacles(knownObstacles) {
       } else {
         secondColumn.append(obstacleNameBoxElem);
       }
-      knownObstaclesBox.append(firstColumn);
-      knownObstaclesBox.append(secondColumn);
+
       quantity++;
     }
 
@@ -316,6 +318,10 @@ function renderKnownObstacles(knownObstacles) {
 
     mutualId++;
   }
+
+  // knownObstaclesBox.append(firstColumn);
+  // knownObstaclesBox.append(secondColumn);
+
   const subcategoriesInfo = document.getElementById("subcategories");
   const allKnownObstacles = document.querySelectorAll(".obstacle");
   for (let knownObstacle of allKnownObstacles) {
