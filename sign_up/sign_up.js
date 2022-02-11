@@ -37,6 +37,9 @@ function backend() {
     // status
   };
   return {
+    getUser() {
+      // take user id give
+    },
     signedUp() {
       const inputs = document.querySelectorAll("input");
       // const confirmPassword = document.getElementById("confirm-password");
@@ -79,7 +82,7 @@ function backend() {
 }
 
 const { signedUp } = backend();
-console.log(signedUp);
+// console.log(signedUp);
 
 // const inputs = document.querySelectorAll("input");
 // const confirmPassword = document.getElementById("confirm-password");
