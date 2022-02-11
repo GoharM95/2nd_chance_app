@@ -241,7 +241,8 @@ const firstColumn = document.getElementById("first-column");
 const secondColumn = document.getElementById("second-column");
 
 function renderKnownObstacles(knownObstacles) {
-  for (let obstacle of knownObstacles) {
+  // for (let obstacle of knownObstacles) {
+  knownObstacles.forEach((obstacle, index) => {
     if (obstacle.hasOwnProperty("obstacleName")) {
       const obstacleNameBoxElem = document.createElement("div");
       obstacleNameBoxElem.classList.add("obstacle");
@@ -271,7 +272,7 @@ function renderKnownObstacles(knownObstacles) {
           const subcategoryName = document.createElement("h4");
           subcategoryName.append(subcategoriesArray[i].name);
           listItem.append(subcategoryName);
-          withSubcategoriesBox.append(listItem);
+          // withSubcategoriesBox.append(listItem);
         }
 
         if (subcategoriesArray[i].hasOwnProperty("subCategoryExplained")) {
@@ -280,7 +281,7 @@ function renderKnownObstacles(knownObstacles) {
             subcategoriesArray[i].subCategoryExplained
           );
           listItem.append(subcategoryExplained);
-          withSubcategoriesBox.append(listItem);
+          // withSubcategoriesBox.append(listItem);
         }
 
         if (subcategoriesArray[i].hasOwnProperty("obstacleFix")) {
@@ -317,7 +318,9 @@ function renderKnownObstacles(knownObstacles) {
     }
 
     mutualId++;
-  }
+  });
+
+  // }
 
   // knownObstaclesBox.append(firstColumn);
   // knownObstaclesBox.append(secondColumn);
