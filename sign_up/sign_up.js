@@ -1,8 +1,8 @@
 window.onload = () => {
-  // addInputHandlers();
-  backend();
+  addInputHandlers();
 };
 
+const body = document.querySelector("body");
 const formElem = document.querySelector("form");
 const dialog = document.getElementById("dialog");
 const dialogWarning = document.getElementById("dialogWarningContent");
@@ -19,106 +19,90 @@ formElem.addEventListener("submit", (event) => {
   event.preventDefault();
 });
 
-// const usersState = [];
-// const userData = {
-//   name: null,
-//   surname: null,
-//   email: null,
-//   password: null,
-// };
+const userData = {
+  name: null,
+  surname: null,
+  email: null,
+  password: null,
+};
+
+const inputs = document.querySelectorAll("input");
+const confirmPassword = document.getElementById("confirm-password");
+const signUpBtn = document.getElementById("sign-up-btn");
+
+signUpBtn.addEventListener("click", () => {
+  if (userData.password !== confirmPassword.value) {
+    dialogWarning.innerHTML = "Please recheck your password!";
+    dialog.classList.add("active");
+    overlay.classList.add("active");
+  }
+  api.signedUp(userData);
+  body.innerHTML = "";
+  const welcomeBox = document.createElement("div");
+  welcomeBox.classList.add("welcome-box");
+  const welcomeText = document.createElement("h1");
+  welcomeText.innerHTML = `Welcome, ${userData.name}!`;
+  const signOutBtn = document.createElement("button");
+  signOutBtn.innerHTML = "Sign Out";
+  signOutBtn.classList.add("sign-out-btn");
+  welcomeBox.append(welcomeText);
+  welcomeBox.append(signOutBtn);
+  body.append(welcomeBox);
+  signOutBtn.addEventListener("click", () => {
+    api.signedOut(userData);
+  });
+});
+
+function makeInputChangeHandler(category) {
+  function inputChangeHandler(event) {
+    const filledUpName = event.target.value;
+    if (event.target.name !== "confirmPwd") {
+      if (category === event.target.name) {
+        userData[category] = filledUpName;
+      }
+    }
+  }
+
+  return inputChangeHandler;
+}
+
+function addInputHandlers() {
+  inputs.forEach((input) => {
+    const inputChangeHandler = makeInputChangeHandler(input.name);
+    input.addEventListener("change", inputChangeHandler);
+  });
+}
 
 function backend() {
   const usersDataBase = [];
-  const userData = {
-    name: null,
-    surname: null,
-    email: null,
-    password: null,
-    // status
-  };
   return {
-    getUser() {
-      // take user id give
+    getUser(userData) {
+      // can't sign up two times to get two users' info
     },
-    signedUp() {
-      const inputs = document.querySelectorAll("input");
-      // const confirmPassword = document.getElementById("confirm-password");
-      const signUpBtn = document.getElementById("sign-up-btn");
-
-      signUpBtn.addEventListener("click", () => {
-        if (userData.password !== userData.confirmPwd) {
-          dialogWarning.innerHTML = "Please recheck your password!";
-          dialog.classList.add("active");
-          overlay.classList.add("active");
-        }
+    signedUp(userData) {
+      usersDataBase.push(userData);
+      userData.isSignedUp = true;
+      userData.id = usersDataBase[userData];
+      userData.id = usersDataBase.indexOf(userData);
+      delete userData.password;
+    },
+    signedIn(userData) {
+      // checking email and password
+      userData.isSignedIn = true;
+      window.location.href = "../homepage/index.html";
+    },
+    signedOut(userData) {
+      userData.isSignedIn = false;
+      body.innerHTML = "";
+      const signInBtn = document.createElement("button");
+      signInBtn.innerHTML = "Sign In";
+      signInBtn.classList.add("sign-in-btn");
+      body.append(signInBtn);
+      signInBtn.addEventListener("click", () => {
+        api.signedIn(userData);
       });
-
-      function makeInputChangeHandler(category) {
-        function inputChangeHandler(event) {
-          const filledUpName = event.target.value;
-          // for (let category in userData) {
-          if (category === event.target.name) {
-            userData[category] = filledUpName;
-          }
-          // }
-        }
-        usersDataBase.push(userData);
-        // console.log("usersDataBase", usersDataBase);
-        return inputChangeHandler;
-      }
-
-      function addInputHandlers() {
-        inputs.forEach((input) => {
-          const inputChangeHandler = makeInputChangeHandler(input.name);
-          input.addEventListener("change", inputChangeHandler);
-        });
-      }
-      console.log("usersDataBase", usersDataBase);
-      addInputHandlers();
     },
-    signedIn() {},
-    signedOut() {},
   };
 }
 
-const { signedUp } = backend();
-// console.log(signedUp);
-
-// const inputs = document.querySelectorAll("input");
-// const confirmPassword = document.getElementById("confirm-password");
-// const signUpBtn = document.getElementById("sign-up-btn");
-
-// signUpBtn.addEventListener("click", () => {
-//   if (userState.password !== userState.confirmPwd) {
-//     dialogWarning.innerHTML = "Please recheck your password!";
-//     dialog.classList.add("active");
-//     overlay.classList.add("active");
-//   }
-// });
-
-// function makeInputChangeHandler(category) {
-//   function inputChangeHandler(event) {
-//     const filledUpName = event.target.value;
-//     for (let category in userState) {
-//       if (category === event.target.name) {
-//         userState[category] = filledUpName;
-//       }
-//     }
-//   }
-//   usersState.push(userState);
-//   return inputChangeHandler;
-// }
-
-// function addInputHandlers() {
-//   inputs.forEach((input) => {
-//     const inputChangeHandler = makeInputChangeHandler(input.name);
-//     input.addEventListener("change", inputChangeHandler);
-//   });
-// }
-
-// usersDataBase in backend function scope
-// get() createUser()
-// sign in() sign up() sign out()
-// {
-//   category: []
-// }
+const api = backend();

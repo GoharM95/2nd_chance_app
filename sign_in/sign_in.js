@@ -9,11 +9,8 @@ formElem.addEventListener("submit", (event) => {
 });
 
 const signedUpUserState = {
-  email: "gohar95@gmail.com",
-  currentEmail: null,
-  password: "gohar95",
-  currentPassword: null,
-  signed: true,
+  email: null,
+  password: null,
 };
 
 const inputs = document.querySelectorAll("input");
