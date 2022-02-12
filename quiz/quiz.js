@@ -137,7 +137,12 @@ function renderCurrentQuestionToForm(
   const questionElem = document.createElement("p");
   questionElem.classList.add("question");
   questionElem.id = "question";
+
+  console.log("quiz[currentIndex]", quiz[currentIndex]);
+  console.log("quiz", quiz);
+  console.log("currentIndex", currentIndex);
   questionElem.innerHTML = quiz[currentIndex].question;
+
   questionBox.append(questionElem);
   const answersList = renderAnswerOptions(quiz, currentIndex, isResult);
   questionBox.append(answersList);
@@ -270,7 +275,7 @@ function loadNextQuestion() {
     startOverBtn.classList.add("start-over-btn");
     startOverBtnBox.append(startOverBtn);
     body.append(startOverBtnBox);
-    // startOverBtn.addEventListener("click", startQuiz);
+    startOverBtn.addEventListener("click", startQuiz);
   }
 }
 
