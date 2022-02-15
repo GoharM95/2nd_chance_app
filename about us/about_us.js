@@ -78,7 +78,6 @@ function renderProgramStages(programStages) {
   programStages.forEach((programStage, index) => {
     const programStageBox = document.createElement("div");
     programStageBox.classList.add("programStageBox");
-    programStageBox.id = `${index}`;
 
     const programStageNameElem = document.createElement("h3");
     programStageNameElem.append(programStage.programStage);
@@ -244,7 +243,7 @@ function renderKnownObstacles(knownObstacles) {
       const obstacleNameElem = document.createElement("h3");
       obstacleNameElem.append(obstacle.obstacleName);
       obstacleNameBoxElem.append(obstacleNameElem);
-      obstacleNameBoxElem.id = `${index}`;
+
       if (quantity < 4) {
         firstColumn.append(obstacleNameBoxElem);
       } else {
