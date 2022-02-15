@@ -36,7 +36,7 @@ signUpBtn.addEventListener("click", () => {
     dialog.classList.add("active");
     overlay.classList.add("active");
   }
-  api.signedUp(userData);
+  api.signUp(userData);
   body.innerHTML = "";
   const welcomeBox = document.createElement("div");
   welcomeBox.classList.add("welcome-box");
@@ -49,7 +49,7 @@ signUpBtn.addEventListener("click", () => {
   welcomeBox.append(signOutBtn);
   body.append(welcomeBox);
   signOutBtn.addEventListener("click", () => {
-    api.signedOut(userData);
+    api.signOut(userData);
   });
 });
 
@@ -79,19 +79,24 @@ function backend() {
     getUser(userData) {
       // can't sign up two times to get two users' info
     },
-    signedUp(userData) {
+    signUp(userData) {
       usersDataBase.push(userData);
       userData.isSignedUp = true;
+
       userData.id = usersDataBase[userData];
-      userData.id = usersDataBase.indexOf(userData);
+      console.log("userData.id", userData.id);
+      console.log("userData", userData);
+      console.log("usersDataBase", usersDataBase);
+
+      // userData.id = usersDataBase.indexOf(userData);
       delete userData.password;
     },
-    signedIn(userData) {
+    signIn(userData) {
       // checking email and password
       userData.isSignedIn = true;
       window.location.href = "../homepage/index.html";
     },
-    signedOut(userData) {
+    signOut(userData) {
       userData.isSignedIn = false;
       body.innerHTML = "";
       const signInBtn = document.createElement("button");
@@ -99,7 +104,7 @@ function backend() {
       signInBtn.classList.add("sign-in-btn");
       body.append(signInBtn);
       signInBtn.addEventListener("click", () => {
-        api.signedIn(userData);
+        api.signIn(userData);
       });
     },
   };

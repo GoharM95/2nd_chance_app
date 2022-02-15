@@ -1,5 +1,5 @@
 window.onload = () => {
-  addEventListenersToCurrentInput();
+  addEventListenersToCurrentInputs();
 };
 
 const formElem = document.querySelector("form");
@@ -56,7 +56,7 @@ function makeInputChangeHandler(signedUpUserState) {
 
 const inputChangeHandler = makeInputChangeHandler(signedUpUserState);
 
-function addEventListenersToCurrentInput() {
+function addEventListenersToCurrentInputs() {
   inputs.forEach((input) => {
     input.addEventListener("change", inputChangeHandler);
   });
