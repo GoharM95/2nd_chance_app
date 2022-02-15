@@ -235,22 +235,21 @@ const knownObstacles = [
 const knownObstaclesBox = document.getElementById("known-obstacles");
 const withSubcategoriesBox = document.getElementById("subcategories");
 
-let mutualId = 0;
 let quantity = 0;
 const firstColumn = document.getElementById("first-column");
 const secondColumn = document.getElementById("second-column");
 
 function renderKnownObstacles(knownObstacles) {
-  // for (let obstacle of knownObstacles) {
   knownObstacles.forEach((obstacle, index) => {
     if (obstacle.hasOwnProperty("obstacleName")) {
       const obstacleNameBoxElem = document.createElement("div");
       obstacleNameBoxElem.classList.add("obstacle");
+      obstacleNameBoxElem.id = "obstacle";
 
       const obstacleNameElem = document.createElement("h3");
       obstacleNameElem.append(obstacle.obstacleName);
       obstacleNameBoxElem.append(obstacleNameElem);
-      obstacleNameBoxElem.id = `obstacle${mutualId}`;
+      // obstacleNameBoxElem.id = `obstacle${index}`;
       if (quantity < 4) {
         firstColumn.append(obstacleNameBoxElem);
       } else {
@@ -259,94 +258,107 @@ function renderKnownObstacles(knownObstacles) {
 
       quantity++;
     }
+  });
 
-    const withSubcategoriesBox = document.createElement("ul");
-    withSubcategoriesBox.classList.add("hide");
-    if (obstacle.hasOwnProperty("obstacleSubCategories")) {
-      const subcategoriesArray = obstacle.obstacleSubCategories;
-      for (let i = 0; i < subcategoriesArray.length; i++) {
-        const listItem = document.createElement("li");
-        withSubcategoriesBox.id = `list${mutualId}`;
-        // ?
-        if (subcategoriesArray[i].hasOwnProperty("name")) {
-          const subcategoryName = document.createElement("h4");
-          subcategoryName.append(subcategoriesArray[i].name);
-          listItem.append(subcategoryName);
-          // withSubcategoriesBox.append(listItem);
-        }
-
-        if (subcategoriesArray[i].hasOwnProperty("subCategoryExplained")) {
-          const subcategoryExplained = document.createElement("p");
-          subcategoryExplained.append(
-            subcategoriesArray[i].subCategoryExplained
-          );
-          listItem.append(subcategoryExplained);
-          // withSubcategoriesBox.append(listItem);
-        }
-
-        if (subcategoriesArray[i].hasOwnProperty("obstacleFix")) {
-          const obstacleFix = document.createElement("p");
-          obstacleFix.append(subcategoriesArray[i].obstacleFix);
-          listItem.append(obstacleFix);
-          withSubcategoriesBox.append(listItem);
-
-          knownObstaclesBox.append(withSubcategoriesBox);
-        }
-      }
-    }
-
-    const withoutSubcategoriesBox = document.createElement("ul");
-    withoutSubcategoriesBox.classList.add("hide");
-    if (obstacle.hasOwnProperty("obstacleExplained")) {
-      const obstacleExplained = document.createElement("p");
-      obstacleExplained.append(obstacle.obstacleExplained);
-      const listItem = document.createElement("li");
-      listItem.append(obstacleExplained);
-      withoutSubcategoriesBox.append(listItem);
-      knownObstaclesBox.append(withoutSubcategoriesBox);
-    }
-
-    if (obstacle.hasOwnProperty("obstacleFix")) {
-      const obstacleFix = document.createElement("p");
-      obstacleFix.append(obstacle.obstacleFix);
-      const listItem = document.createElement("li");
-      withoutSubcategoriesBox.id = `ul${mutualId}`;
-
-      listItem.append(obstacleFix);
-      withoutSubcategoriesBox.append(listItem);
-      knownObstaclesBox.append(withoutSubcategoriesBox);
-    }
-
-    mutualId++;
+  const obstacleElem = document.getElementById("obstacle");
+  console.log("obstacle", obstacle);
+  obstacleElem.addEventListener("click", () => {
+    renderObstacleInfo(index, knownObstacles);
+    // const currentObstacleId = obstacle.id;
+    // const currentObstacleIdLastDigit =
+    //   currentObstacleId[currentObstacleId.length - 1];
+    // const currentObstacleInfo = document.getElementById(
+    //   `list${currentObstacleIdLastDigit}`
+    // );
+    // if (currentObstacleInfo.classList.contains("hide")) {
+    //   subcategoriesInfo.innerHTML = "";
+    //   subcategoriesInfo.append(currentObstacleInfo);
+    //   currentObstacleInfo.classList.remove("hide");
+    // } else {
+    //   subcategoriesInfo.append(currentObstacleInfo);
+    //   currentObstacleInfo.classList.add("hide");
+    // }
   });
 
   // }
 
-  // knownObstaclesBox.append(firstColumn);
-  // knownObstaclesBox.append(secondColumn);
+  knownObstaclesBox.append(firstColumn);
+  knownObstaclesBox.append(secondColumn);
 
-  const subcategoriesInfo = document.getElementById("subcategories");
-  const allKnownObstacles = document.querySelectorAll(".obstacle");
-  for (let knownObstacle of allKnownObstacles) {
-    knownObstacle.addEventListener("click", () => {
-      const currentObstacleId = knownObstacle.id;
-      const currentObstacleIdLastDigit =
-        currentObstacleId[currentObstacleId.length - 1];
-      const currentObstacleInfo = document.getElementById(
-        `list${currentObstacleIdLastDigit}`
-      );
-      if (currentObstacleInfo.classList.contains("hide")) {
-        subcategoriesInfo.innerHTML = "";
-        subcategoriesInfo.append(currentObstacleInfo);
-        currentObstacleInfo.classList.remove("hide");
-      } else {
-        subcategoriesInfo.append(currentObstacleInfo);
-        currentObstacleInfo.classList.add("hide");
-      }
-    });
-  }
+  // const subcategoriesInfo = document.getElementById("subcategories");
+  // const allKnownObstacles = document.querySelectorAll(".obstacle");
+  // for (let knownObstacle of allKnownObstacles) {
+  //   knownObstacle.addEventListener("click", () => {
+  //     const currentObstacleId = knownObstacle.id;
+  //     const currentObstacleIdLastDigit =
+  //       currentObstacleId[currentObstacleId.length - 1];
+  //     const currentObstacleInfo = document.getElementById(
+  //       `list${currentObstacleIdLastDigit}`
+  //     );
+  //     if (currentObstacleInfo.classList.contains("hide")) {
+  //       subcategoriesInfo.innerHTML = "";
+  //       subcategoriesInfo.append(currentObstacleInfo);
+  //       currentObstacleInfo.classList.remove("hide");
+  //     } else {
+  //       subcategoriesInfo.append(currentObstacleInfo);
+  //       currentObstacleInfo.classList.add("hide");
+  //     }
+  //   });
+  // }
 }
 
-// fix subcategories bug
-// programStages click fix
-// 2 classes
+function renderObstacleInfo(index, knownObstacles) {
+  const withSubcategoriesBox = document.createElement("ul");
+  // withSubcategoriesBox.classList.add("hide");
+  console.log("knownObstacles", knownObstacles);
+  console.log("index", index);
+  if (knownObstacles[index].hasOwnProperty("obstacleSubCategories")) {
+    const subcategoriesArray = knownObstacles[index].obstacleSubCategories;
+    for (let i = 0; i < subcategoriesArray.length; i++) {
+      const listItem = document.createElement("li");
+      // withSubcategoriesBox.id = `list${index}`;
+      if (subcategoriesArray[i].hasOwnProperty("name")) {
+        const subcategoryName = document.createElement("h4");
+        subcategoryName.append(subcategoriesArray[i].name);
+        listItem.append(subcategoryName);
+      }
+
+      if (subcategoriesArray[i].hasOwnProperty("subCategoryExplained")) {
+        const subcategoryExplained = document.createElement("p");
+        subcategoryExplained.append(subcategoriesArray[i].subCategoryExplained);
+        listItem.append(subcategoryExplained);
+      }
+
+      if (subcategoriesArray[i].hasOwnProperty("obstacleFix")) {
+        const obstacleFix = document.createElement("p");
+        obstacleFix.append(subcategoriesArray[i].obstacleFix);
+        listItem.append(obstacleFix);
+      }
+      withSubcategoriesBox.append(listItem);
+
+      knownObstaclesBox.append(withSubcategoriesBox);
+    }
+  }
+
+  const withoutSubcategoriesBox = document.createElement("ul");
+  withoutSubcategoriesBox.classList.add("hide");
+  if (knownObstacles[index].hasOwnProperty("obstacleExplained")) {
+    const obstacleExplained = document.createElement("p");
+    obstacleExplained.append(knownObstacles[index].obstacleExplained);
+    const listItem = document.createElement("li");
+    listItem.append(obstacleExplained);
+    withoutSubcategoriesBox.append(listItem);
+    knownObstaclesBox.append(withoutSubcategoriesBox);
+  }
+
+  if (knownObstacles[index].hasOwnProperty("obstacleFix")) {
+    const obstacleFix = document.createElement("p");
+    obstacleFix.append(knownObstacles[index].obstacleFix);
+    const listItem = document.createElement("li");
+    withoutSubcategoriesBox.id = `list${index}`;
+
+    listItem.append(obstacleFix);
+    withoutSubcategoriesBox.append(listItem);
+    knownObstaclesBox.append(withoutSubcategoriesBox);
+  }
+}
