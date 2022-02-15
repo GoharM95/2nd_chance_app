@@ -81,15 +81,13 @@ function backend() {
     },
     signUp(userData) {
       usersDataBase.push(userData);
-      userData.isSignedUp = true;
+      userData.isSignedIn = true;
+      userData.id = usersDataBase.length - 1;
 
-      userData.id = usersDataBase[userData];
-      console.log("userData.id", userData.id);
-      console.log("userData", userData);
-      console.log("usersDataBase", usersDataBase);
+      const userDataClone = { ...userData };
+      delete userDataClone.password;
 
-      // userData.id = usersDataBase.indexOf(userData);
-      delete userData.password;
+      return userDataClone;
     },
     signIn(userData) {
       // checking email and password
