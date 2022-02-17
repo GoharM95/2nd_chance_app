@@ -9,52 +9,35 @@
     <title>Questions</title>
   </head>
   <body>
-    <h1>Start you testing with answering this questions below:</h1>
+    <h1>Start your testing with answering these questions below:</h1>
     <p>
-      Please write an essay that answers the questions below. It should be
-      between 0.5 - 2 pages long. (?) Please keep your answers honest. The point
-      is not to impress us, but to demonstrate how you think. Please write it
-      yourself and in javascript if you can. Mistakes are ok. We would like to
-      assess the level of your English writing. If you can’t, that’s ok too,
-      write in Armenian.
+      Please keep your answers honest. The point is not to impress us, but to
+      demonstrate how you think. Please write it yourself and in javascript if
+      you can. Mistakes are ok. We would like to assess the level of your
+      English writing. If you can&apos;t, that&apos;s ok too, write in Armenian.
     </p>
 
     <p>
       Take Math, English and Javascript(if you have some knowledge) tests
       following the link below: link
     </p>
-    <div id="starting-questions-box"></div>
-    <button>Submit</button>
+    <div id="starting-questions-box" class="starting-questions-box"></div>
     <p>
       How would you rate yourself on the scale of 1 to 10 based on Math, English
       and Javascript knowledge?
     </p>
-    <form>
-      <label>Math</label>
-      <label
-        ><input
-          type="radio"
-          name="elementary"
-          value="elementary"
-        />Elementary</label
-      >
-      <label
-        ><input
-          type="radio"
-          name="intermediate"
-          value="intermediate"
-        />Intermediate</label
-      >
-      <label
-        ><input type="radio" name="advanced" value="advanced" />A dvanced</label
-      >
-      <label
-        ><input
-          type="radio"
-          name="proficient"
-          value="proficient"
-        />Proficient</label
-      >
-    </form>
+    <form></form>
+
+    <div class="submitBtnContainer">
+      <button id="submitBtnForAnswers" class="submitBtnForAnswers">
+        Submit
+      </button>
+    </div>
+    <div id="dialog" class="dialog">
+      <h1 id="dialogWarningContent" class="dialogWarningContent"></h1>
+      <button id="ok-btn" class="ok-btn">Ok</button>
+    </div>
+    <div id="overlay" class="overlay"></div>
+    <div id="questions_answers" class="questions_answers"></div>
   </body>
 </html>

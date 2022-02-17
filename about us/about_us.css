@@ -6,3 +6,145 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
+
+body {
+  margin: 30px;
+  line-height: 25px;
+  text-indent: 15px;
+}
+
+.hide {
+  display: none;
+}
+
+h2 {
+  text-indent: 30px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+input[type="checkbox"] {
+  filter: grayscale(1);
+  margin-top: 6px;
+  margin-left: 6px;
+}
+
+.candidate-trait {
+  display: flex;
+}
+
+.candidate-traits {
+  margin-bottom: 15px;
+}
+
+.stages-preview-header {
+  text-decoration: underline;
+  font-size: 20px;
+}
+
+.program-stages {
+  display: flex;
+  margin-top: 20px;
+}
+
+.programStageBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid black;
+  border-radius: 10px;
+  width: 300px;
+  height: 100px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.program-stage-info {
+  margin: 15px 0px;
+  border: 2px solid black;
+}
+
+.known-obstacles {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  text-indent: 0px;
+}
+
+.first-column,
+.second-column {
+  flex-direction: column;
+}
+
+.obstacle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  padding: 5px;
+  border: 1px solid black;
+  width: 250px;
+  height: 80px;
+  font-size: 18px;
+}
+
+.known-obstacles ul {
+  list-style: none;
+}
+
+.subcategories {
+  align-self: flex-start;
+  margin-top: 30px;
+  text-indent: 0px;
+}
+.subcategories ul {
+  list-style: none;
+}
+
+.subcategories h4 {
+  text-decoration: underline;
+  font-size: 18px;
+}
+
+.arrow {
+  align-self: center;
+  text-indent: 0px;
+  font-size: 20px;
+}
+
+@media (max-width: 500px) {
+  .program-stages {
+    display: flex;
+    margin-top: 40px;
+    flex-direction: column;
+    align-items: center;
+    text-indent: 0px;
+  }
+
+  .programStageBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    border-radius: 10px;
+    width: 300px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+
+  .arrow {
+    margin-top: 0px;
+    transform: rotate(90deg);
+  }
+
+  .known-obstacles {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .subcategories {
+    margin-left: 0px;
+  }
+}

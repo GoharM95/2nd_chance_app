@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Quiz</title>
     <link rel="stylesheet" href="quiz.css" />
-    <!-- <script defer src="quiz.js"></script> -->
-    <script defer src="quizfinal.js"></script>
+    <script defer src="quiz.js"></script>
   </head>
   <body>
-    <div id="timer"></div>
-    <div class="timer"></div>
-    <div class="quiz">
+    <div class="start-btn-box">
       <button id="start-btn" class="start-btn">Start</button>
-      <button id="next-btn" class="next-btn">Next</button>
-      <form></form>
+    </div>
+
+    <div id="quiz" class="quiz hide">
+      <div id="timer" class="timer hide"></div>
+      <form class="hide"></form>
+      <button id="next-btn" class="next-btn hide">Next</button>
     </div>
   </body>
 </html>
