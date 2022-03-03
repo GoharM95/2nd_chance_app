@@ -75,6 +75,7 @@ const programStagesBox = document.getElementById("program-stages");
 const programStageInfoElem = document.getElementById("program-stage-info");
 
 function renderProgramStages(programStages) {
+  let currentStage = null;
   programStages.forEach((programStage, index) => {
     const programStageBox = document.createElement("div");
     programStageBox.classList.add("programStageBox");
@@ -90,7 +91,13 @@ function renderProgramStages(programStages) {
       if (programStageInfoElem.childNodes.length) {
         programStageInfoElem.innerHTML = "";
       }
-      renderProgramStageInfo(index, programStages);
+
+      if (currentStage !== programStage) {
+        renderProgramStageInfo(index, programStages);
+        currentStage = programStage;
+      } else {
+        currentStage = null;
+      }
     });
 
     function renderProgramStageInfo(index, programStages) {
@@ -235,7 +242,8 @@ const secondColumn = document.getElementById("second-column");
 const subcategoriesInfo = document.getElementById("subcategories");
 
 function renderKnownObstacles(knownObstacles) {
-  knownObstacles.forEach((obstacle, index) => {
+  let currentObstacle = null;
+  knownObstacles.forEach((obstacle) => {
     if (obstacle.hasOwnProperty("obstacleName")) {
       const obstacleNameBoxElem = document.createElement("div");
       obstacleNameBoxElem.classList.add("obstacle");
@@ -256,16 +264,22 @@ function renderKnownObstacles(knownObstacles) {
         if (subcategoriesInfo.childNodes.length) {
           subcategoriesInfo.innerHTML = "";
         }
-        renderObstacleInfo(index, knownObstacles);
+
+        if (currentObstacle !== obstacle) {
+          renderObstacleInfo(obstacle);
+          currentObstacle = obstacle;
+        } else {
+          currentObstacle = null;
+        }
       });
     }
   });
 }
 
-function renderObstacleInfo(index, knownObstacles) {
+function renderObstacleInfo(obstacle) {
   const withSubcategoriesBox = document.createElement("ul");
-  if (knownObstacles[index].hasOwnProperty("obstacleSubCategories")) {
-    const subcategoriesArray = knownObstacles[index].obstacleSubCategories;
+  if (obstacle.hasOwnProperty("obstacleSubCategories")) {
+    const subcategoriesArray = obstacle.obstacleSubCategories;
     for (let i = 0; i < subcategoriesArray.length; i++) {
       const listItem = document.createElement("li");
       if (subcategoriesArray[i].hasOwnProperty("name")) {
@@ -291,17 +305,17 @@ function renderObstacleInfo(index, knownObstacles) {
   }
 
   const withoutSubcategoriesBox = document.createElement("ul");
-  if (knownObstacles[index].hasOwnProperty("obstacleExplained")) {
+  if (obstacle.hasOwnProperty("obstacleExplained")) {
     const obstacleExplained = document.createElement("p");
-    obstacleExplained.append(knownObstacles[index].obstacleExplained);
+    obstacleExplained.append(obstacle.obstacleExplained);
     const listItem = document.createElement("li");
     listItem.append(obstacleExplained);
     withoutSubcategoriesBox.append(listItem);
   }
 
-  if (knownObstacles[index].hasOwnProperty("obstacleFix")) {
+  if (obstacle.hasOwnProperty("obstacleFix")) {
     const obstacleFix = document.createElement("p");
-    obstacleFix.append(knownObstacles[index].obstacleFix);
+    obstacleFix.append(obstacle.obstacleFix);
     const listItem = document.createElement("li");
 
     listItem.append(obstacleFix);
