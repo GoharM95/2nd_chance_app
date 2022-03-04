@@ -6,3 +6,15 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
+
+body {
+  margin: 20px;
+}
+
+ul {
+  list-style: none;
+}
+
+ul li {
+  margin-top: 10px;
+}
