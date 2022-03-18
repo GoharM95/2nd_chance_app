@@ -9,7 +9,6 @@
 
 body {
   text-align: center;
-  padding: 100px;
 }
 
 h1 {
@@ -18,7 +17,7 @@ h1 {
 
 form {
   padding: 20px;
-  margin: 20px auto;
+  margin: 100px auto;
   width: 500px;
   height: 550px;
   display: flex;
@@ -44,4 +43,93 @@ input {
   margin-top: 20px;
   border-radius: 20px;
   text-indent: 10px;
+}
+
+.dialogWarningContent {
+  font-size: 25px;
+  height: 100px;
+  text-align: center;
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: 200ms ease-in-out;
+  border: 1px solid black;
+  border-radius: 10px;
+  z-index: 10;
+  background-color: white;
+  width: 500px;
+  max-width: 80%;
+  height: 300px;
+  padding: 20px;
+}
+
+.dialog.active {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  pointer-events: none;
+  transition: 200ms ease-in-out;
+}
+
+.overlay.active {
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.ok-btn {
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+  font-size: 18px;
+  align-items: center;
+}
+
+.welcome-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sign-out-btn {
+  width: 100px;
+  height: 50px;
+  background-color: #588061;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+.sign-in-btn {
+  margin-top: 200px;
+  width: 100px;
+  height: 50px;
+  background-color: #588061;
+  font-size: 16px;
+  border-radius: 6px;
+}
+
+@media (max-width: 500px) {
+  body {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+  form {
+    width: 400px;
+  }
 }

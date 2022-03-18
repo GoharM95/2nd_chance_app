@@ -85,3 +85,17 @@ button {
   margin-top: 20px;
   font-size: 30px;
 }
+
+@media (max-width: 500px) {
+  body {
+    text-indent: 10px;
+  }
+
+  .starting-questions-box textarea {
+    width: 400px;
+    height: 50px;
+    margin: 10px 20px;
+    outline: none;
+    padding: 5px;
+  }
+}
